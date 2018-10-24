@@ -16,7 +16,8 @@ class TelnetHandler:
 
     def read_line(self):
         line = self.connection.read_until(b"\n", 0.2)
-        self.output_queue.put(line)
+        if len(line) > 0:
+            self.output_queue.put(line)
 
     def send(self, userInput):
         self.connection.write((userInput + "\n").encode("ascii"))

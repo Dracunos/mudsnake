@@ -21,7 +21,7 @@ class Main(GridLayout):
             )
         self.output_buffer = OutputBuffer(
             text = "Loading...",
-            size_hint = (1, 0.8),
+            size_hint = (1, 1),
             pos_hint={'center_x': 0.5, 'center_y': 0.1}
         )
         self.add_widget(self.exit_button)
