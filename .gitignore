@@ -1,3 +1,4 @@
 *.pyc
 *.swp
 mudsnake_venv
+/source/.kivy
