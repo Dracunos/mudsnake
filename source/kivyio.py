@@ -26,9 +26,9 @@ class Main(GridLayout):
         )
         self.add_widget(self.exit_button)
         self.add_widget(self.output_buffer)
-        def ff(dx):
+        def buffer_callback(dx):
             self.output_buffer.text = self.output_handler.read_to_buffer(self.connection.output_queue)
-        Clock.schedule_interval(ff, 0.2)
+        Clock.schedule_interval(buffer_callback, 0.05)
         
         
 class ExitButton(Label):
