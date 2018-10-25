@@ -11,6 +11,7 @@ class TelnetHandler:
     def __init__(self, host, port):
         self.host = host
         self.port = port
+        self.terminate = False
         self.connection = telnetlib.Telnet(host, port)
         self.output_queue = queue.Queue()
 
@@ -24,12 +25,16 @@ class TelnetHandler:
 
     def run(self):
         while True:
+            if self.terminate:
+                break
             self.read_line()
 
     def start(self):
         self.thread = threading.Thread(target=self.run)
         self.thread.start()
 
+    def end(self):
+        self.terminate = True
 
 
 

@@ -1,15 +1,17 @@
-#:kivy `1.10.1`
+#:kivy 1.10.1
 
 
-Main:
+<MainRoot>:
     cols: 1
+    
 
     ExitButton:
+        id: exitbutton
         text: "exit"
         size_hint: (1, 0.2)
-        pos_hint: {'center_x': 0.5, 'center_y': 0.1}
 
     OutputBuffer:
-        size_hint: (1, 1)
-        pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+        id: outputbuffer
+        font_size: 30
+        font_name: "RobotoMono-Regular"
 

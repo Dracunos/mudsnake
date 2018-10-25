@@ -6,25 +6,15 @@ import common
 import outputhandler
 import telnethandler
 
-class Main(GridLayout):
+class MainRoot(GridLayout):
     def __init__(self, main_app, **kwargs):
-        super(Main, self).__init__(**kwargs)
+        super(MainRoot, self).__init__(**kwargs)
         self.connection = telnethandler.TelnetHandler("aardwolf.org", 23)
         self.connection.start()
         self.app = main_app
         self.output_handler = outputhandler.OutputHandler()
-        #self.exit_button = ExitButton(
-        #    text='exit',
-        #    size_hint=(1, 0.2),
-        #    pos_hint={'center_x': 0.5, 'center_y': 0.1}
-        #    )
-        #self.output_buffer = OutputBuffer(
-        #    text = "Loading...",
-        #    size_hint = (1, 1),
-        #    pos_hint={'center_x': 0.5, 'center_y': 0.1}
-        #)
         def buffer_callback(dx):
-            self.output_buffer.text = self.output_handler.read_to_buffer(self.connection.output_queue)
+            self.ids.outputbuffer.text = self.output_handler.read_to_buffer(self.connection.output_queue)
         Clock.schedule_interval(buffer_callback, 0.05)
         
         
@@ -34,6 +24,7 @@ class ExitButton(Label):
     
     def on_touch_down(self, event):
         if self.collide_point(*event.pos):
+            self.parent.connection.end()
             self.parent.app.stop()
             return True
         else:
@@ -47,9 +38,7 @@ class OutputBuffer(Label):
             
 class MudSnakeApp(App):
     def build(self):
-        self.root = root = Main(main_app=self)
-        return root
-        
+       return MainRoot(main_app=self)
 
 if __name__ == '__main__':
     MudSnakeApp().run()

@@ -1,3 +1,0 @@
-title=Test
-author=Dracunos
-orientation=portrait
