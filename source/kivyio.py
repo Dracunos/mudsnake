@@ -13,19 +13,16 @@ class Main(GridLayout):
         self.connection.start()
         self.app = main_app
         self.output_handler = outputhandler.OutputHandler()
-        self.cols = 1
-        self.exit_button = ExitButton(
-            text='exit',
-            size_hint=(1, 0.2),
-            pos_hint={'center_x': 0.5, 'center_y': 0.1}
-            )
-        self.output_buffer = OutputBuffer(
-            text = "Loading...",
-            size_hint = (1, 1),
-            pos_hint={'center_x': 0.5, 'center_y': 0.1}
-        )
-        self.add_widget(self.exit_button)
-        self.add_widget(self.output_buffer)
+        #self.exit_button = ExitButton(
+        #    text='exit',
+        #    size_hint=(1, 0.2),
+        #    pos_hint={'center_x': 0.5, 'center_y': 0.1}
+        #    )
+        #self.output_buffer = OutputBuffer(
+        #    text = "Loading...",
+        #    size_hint = (1, 1),
+        #    pos_hint={'center_x': 0.5, 'center_y': 0.1}
+        #)
         def buffer_callback(dx):
             self.output_buffer.text = self.output_handler.read_to_buffer(self.connection.output_queue)
         Clock.schedule_interval(buffer_callback, 0.05)
@@ -48,11 +45,11 @@ class OutputBuffer(Label):
 
             
             
-class MudApp(App):
+class MudSnakeApp(App):
     def build(self):
         self.root = root = Main(main_app=self)
         return root
         
 
 if __name__ == '__main__':
-    MudApp().run()
+    MudSnakeApp().run()

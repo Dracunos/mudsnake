@@ -7,7 +7,7 @@ experience.
 import kivyio
 
 def main():
-    kivy_app = kivyio.MudApp()
+    kivy_app = kivyio.MudSnakeApp()
     
     kivy_app.run()
 
