@@ -13,15 +13,25 @@ import telnethandler
 class MainRoot(GridLayout):
     def __init__(self, main_app, **kwargs):
         super(MainRoot, self).__init__(**kwargs)
-        self.connection = telnethandler.TelnetHandler("aardwolf.org", 23, self.buffer_callback)
+        self.connection = telnethandler.TelnetHandler(
+            "aardwolf.org", 23, self.buffer_callback)
         self.connection.start()
         self.app = main_app
         self.output_handler = outputhandler.OutputHandler()
-        #Clock.schedule_interval(self.buffer_callback, 0.05)
+        self.ids.inputbox.bind(on_text_validate=self.text_input_callback)
         
     def buffer_callback(self):
-        self.ids.outputbuffer.text = self.output_handler.read_to_buffer(self.connection.output_queue)
-        self.ids.outputbuffer.scroll_to_bottom()
+        mybuffer = self.ids.outputbuffer
+        mybuffer.text = self.output_handler.read_to_buffer(
+            self.connection.output_queue)
+        mybuffer.scroll_to_bottom()
+
+    def text_input_callback(self, text):
+        self.connection.send(text)
+        Clock.schedule_once(self.focus_text_box)
+    
+    def focus_text_box(self, *args):
+        self.ids.inputbox.focus = True
         
         
 class ExitButton(Label):
