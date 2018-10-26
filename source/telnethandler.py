@@ -8,9 +8,10 @@ import threading
 
 class TelnetHandler:
     
-    def __init__(self, host, port):
+    def __init__(self, host, port, new_msg_callback):
         self.host = host
         self.port = port
+        self.new_msg_callback = new_msg_callback
         self.terminate = False
         self.connection = telnetlib.Telnet(host, port)
         self.output_queue = queue.Queue()
@@ -19,6 +20,7 @@ class TelnetHandler:
         line = self.connection.read_until(b"\n", 0.2)
         if len(line) > 0:
             self.output_queue.put(line)
+            self.new_msg_callback()
 
     def send(self, userInput):
         self.connection.write((userInput + "\n").encode("ascii"))

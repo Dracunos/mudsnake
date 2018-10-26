@@ -8,10 +8,20 @@
     ExitButton:
         id: exitbutton
         text: "exit"
-        size_hint: (1, 0.2)
+        size_hint: (1, 0.1)
 
-    OutputBuffer:
-        id: outputbuffer
-        font_size: 30
-        font_name: "RobotoMono-Regular"
+    BoxLayout:
+        orientation: "vertical"
+        ScrollView:
+            OutputBuffer:
+                id: outputbuffer
+                size_hint_y: None
+                height: 4000
+                font_size: 30
+                text_size: (self.width, self.height)
+                font_name: "RobotoMono-Regular"
+            
+        InputBox:
+            id: inputbox
+            size_hint: (1, 0.06)
 

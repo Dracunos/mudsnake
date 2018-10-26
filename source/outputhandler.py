@@ -1,14 +1,16 @@
-
+import re
 
 class OutputHandler():
     def __init__(self):
         self.buffer = []
+        self.escape_code = "\x1b"
         
     def read_to_buffer(self, output_queue):
         while not output_queue.empty():
             try:
                 outline = output_queue.get(False).decode("ascii")
                 outline = outline.replace("\r", "")
+                outline = self.handle_escape_codes(outline)
                 self.buffer.append(outline)
             except queue.Empty:
                 break
@@ -16,6 +18,11 @@ class OutputHandler():
             self.buffer.pop(0)
         
         return "".join(self.buffer)
+    
+    def handle_escape_codes(self, line):
+        if line.find(self.escape_code + "[") == -1:
+            return line
+        return re.sub(self.escape_code + "\[\d+.*?m", "", line)
 
 
 
