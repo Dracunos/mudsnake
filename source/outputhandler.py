@@ -12,7 +12,7 @@ class OutputHandler():
                 outline = outline.replace("\r", "")
                 outline = self.handle_escape_codes(outline)
                 self.buffer.append(outline)
-            except queue.Empty:
+            except Queue.Empty:
                 break
         while len(self.buffer) > 100:
             self.buffer.pop(0)

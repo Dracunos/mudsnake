@@ -1,6 +1,7 @@
 from kivy.config import Config
 Config.set("kivy", "exit_on_escape", "0")
 from kivy.app import App
+from kivy.core.window import Window
 from kivy.clock import Clock
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
@@ -19,6 +20,11 @@ class MainRoot(GridLayout):
         self.app = main_app
         self.output_handler = outputhandler.OutputHandler()
         self.ids.inputbox.bind(on_text_validate=self.text_input_callback)
+        Clock.schedule_interval(self.resize_screen, 0.05)
+        
+    def resize_screen(self, dt):
+        kb_size = Window.keyboard_height
+        self.ids.kboffset.height = kb_size
         
     def buffer_callback(self):
         mybuffer = self.ids.outputbuffer
@@ -26,8 +32,8 @@ class MainRoot(GridLayout):
             self.connection.output_queue)
         mybuffer.scroll_to_bottom()
 
-    def text_input_callback(self, text):
-        self.connection.send(text)
+    def text_input_callback(self, inputbox):
+        self.connection.send(inputbox.text)
         Clock.schedule_once(self.focus_text_box)
     
     def focus_text_box(self, *args):
@@ -55,6 +61,9 @@ class OutputBuffer(Label):
        
        
 class InputBox(TextInput):
+    pass
+    
+class KeyboardOffset(Label):
     pass
 
             

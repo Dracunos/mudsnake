@@ -1,4 +1,7 @@
 *.pyc
 *.swp
+*.pyo
 mudsnake_venv
 /source/.kivy
+/source/android.txt
+/source/.launch

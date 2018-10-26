@@ -1,4 +1,4 @@
-#:kivy 1.10.1
+#:kivy 1.9.1
 
 
 <MainRoot>:
@@ -8,11 +8,12 @@
     ExitButton:
         id: exitbutton
         text: "exit"
-        size_hint: (1, 0.1)
+        size_hint: (1, 0.06)
 
     BoxLayout:
         orientation: "vertical"
         ScrollView:
+            id: scrollbuffer
             OutputBuffer:
                 id: outputbuffer
                 size_hint_y: None
@@ -25,4 +26,9 @@
             id: inputbox
             size_hint: (1, 0.06)
             multiline: False
+            
+    KeyboardOffset:
+        id: kboffset
+        size_hint_y: None
+        height: 0
 

@@ -3,7 +3,10 @@
 """
 
 import telnetlib
-import queue
+try:
+    import Queue
+except ModuleNotFoundError:
+    import queue as Queue
 import threading
 
 class TelnetHandler:
@@ -14,7 +17,7 @@ class TelnetHandler:
         self.new_msg_callback = new_msg_callback
         self.terminate = False
         self.connection = telnetlib.Telnet(host, port)
-        self.output_queue = queue.Queue()
+        self.output_queue = Queue.Queue()
 
     def read_line(self):
         line = self.connection.read_until(b"\n", 0.2)
