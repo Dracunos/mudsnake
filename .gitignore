@@ -5,3 +5,5 @@ mudsnake_venv
 /source/.kivy
 /source/android.txt
 /source/.launch
+/buildozer
+.buildozer
