@@ -4,6 +4,8 @@ aliases, macros, and maybe even some scripting for your mud
 experience.
 """
 
+
+# TODO: comment your freaking code!
 import kivyio
 
 def main():

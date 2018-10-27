@@ -9,6 +9,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.scrollview import ScrollView
 import common
 import outputhandler
+import inputhandler
 import telnethandler
 
 class MainRoot(GridLayout):
@@ -18,11 +19,16 @@ class MainRoot(GridLayout):
             "aardwolf.org", 23, self.buffer_callback)
         self.connection.start()
         self.app = main_app
+        self.ids.kbbutt.bind(on_touch_down = self.kbbuttonpress)
+        self.input_handler = inputhandler.InputHandler(self)
+        Window.bind(on_key_down = self.input_handler.parse_input)
         self.output_handler = outputhandler.OutputHandler()
-        self.ids.inputbox.bind(on_text_validate=self.text_input_callback)
         Clock.schedule_interval(self.resize_screen, 0.05)
         
-    def resize_screen(self, dt):
+    def kbbuttonpress(self, *args):
+        Window.request_keyboard(self.resize_screen, self)
+        
+    def resize_screen(self, dt=0):
         kb_size = Window.keyboard_height
         self.ids.kboffset.height = kb_size
         
@@ -31,18 +37,9 @@ class MainRoot(GridLayout):
         mybuffer.text = self.output_handler.read_to_buffer(
             self.connection.output_queue)
         mybuffer.scroll_to_bottom()
-
-    def text_input_callback(self, inputbox):
-        self.connection.send(inputbox.text)
-        Clock.schedule_once(self.focus_text_box)
-    
-    def focus_text_box(self, *args):
-        self.ids.inputbox.focus = True
-        
+   
         
 class ExitButton(Label):
-    def __init__(self, **kwargs):
-        super(ExitButton, self).__init__(**kwargs)
     
     def on_touch_down(self, event):
         if self.collide_point(*event.pos):
