@@ -7,3 +7,4 @@ mudsnake_venv
 /source/.launch
 /buildozer
 .buildozer
+/bin
