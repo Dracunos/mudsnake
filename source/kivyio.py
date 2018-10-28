@@ -3,6 +3,7 @@ Config.set("kivy", "exit_on_escape", "0")
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.clock import Clock
+from kivy.properties import ObjectProperty
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
@@ -19,16 +20,11 @@ class MainRoot(GridLayout):
             "aardwolf.org", 23, self.buffer_callback)
         self.connection.start()
         self.app = main_app
-        self.ids.kbbutt.bind(on_touch_down = self.kbbuttonpress)
         self.output_handler = outputhandler.OutputHandler()
         Clock.schedule_interval(self.constant_callback, 0.05)
-        
-    def kbbuttonpress(self, *args):
-        inputhandler.KeyboardListener(self)
     
     def constant_callback(self, dt=0):
         self.resize_screen()
-        self.ids.outputbuffer.scroll_to_bottom()
         
     def resize_screen(self):
         kb_size = Window.keyboard_height
@@ -38,7 +34,7 @@ class MainRoot(GridLayout):
         mybuffer = self.ids.outputbuffer
         mybuffer.text = self.output_handler.read_to_buffer(
             self.connection.output_queue)
-        mybuffer.scroll_to_bottom()
+        #mybuffer.scroll_to_bottom()
    
         
 class ExitButton(Label):
@@ -55,12 +51,20 @@ class OutputBuffer(Label):
     def __init__(self, **kwargs):
         super(OutputBuffer, self).__init__(**kwargs)
         
-    def scroll_to_bottom(self):
-       self.parent.scroll_to(self)
+    def scroll_to_bottom(self, *args):
+        self.parent.scroll_to(self)
        
        
 class InputBox(TextInput):
-    pass
+    root = ObjectProperty(None) # root set set in .kv
+    
+    def __init__(self, **kwargs):
+        self.input_handler = inputhandler.InputHandler(self)
+        return super(InputBox, self).__init__(**kwargs)
+    
+    def insert_text(self, s, from_undo=False):
+        s = self.input_handler.parse_input(s)
+        return super(InputBox, self).insert_text(s, from_undo=from_undo)
     
 class KeyboardOffset(Label):
     pass

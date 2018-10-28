@@ -8,17 +8,14 @@
     ExitButton:
         id: exitbutton
         text: "exit"
-        size_hint: (1, 0.06)
-        
-    Label:
-        id: kbbutt
-        text: "kb"
-        size_hint: (1, 0.1)
+        size_hint: (1, None)
+        height: 80
 
     BoxLayout:
         orientation: "vertical"
         ScrollView:
             id: scrollbuffer
+            scroll_y: 0
             OutputBuffer:
                 id: outputbuffer
                 size_hint_y: None
@@ -27,11 +24,12 @@
                 text_size: (self.width, self.height)
                 font_name: "RobotoMono-Regular"
             
-        TextInput:
+        InputBox:
             id: inputbox
             keyboard_suggestions: False
             size_hint: (1, None)
             height: 100
+            root: root
             
     KeyboardOffset:
         id: kboffset
