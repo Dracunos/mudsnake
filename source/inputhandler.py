@@ -11,7 +11,7 @@ class InputHandler(object):
 
 
 class KeyboardListener(Widget):
-    def __init_(self, kivyroot, **kwargs):
+    def __init__(self, kivyroot, **kwargs):
         super(KeyboardListener, self).__init_(**kwargs)
         self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
         if self._keyboard.widget:
