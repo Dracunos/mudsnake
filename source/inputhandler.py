@@ -8,6 +8,8 @@ class InputHandler(object):
     
     def parse_input(self, keyboard, key, scancode=None, codepoint=None, modifier=None, **kwargs):
         Logger.info("Input: " + str(repr(key)) + ", sc: " + str(repr(scancode)) + ", codepoint: " + str(repr(codepoint)) + ", mods: " + str(repr(modifier)))
+        if key[1] == "escape":
+            keyboard.release()
 
 
 class KeyboardListener(Widget):
