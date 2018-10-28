@@ -8,3 +8,4 @@ mudsnake_venv
 /buildozer
 .buildozer
 /bin
+.idea
