@@ -20,13 +20,11 @@ class MainRoot(GridLayout):
         self.connection.start()
         self.app = main_app
         self.ids.kbbutt.bind(on_touch_down = self.kbbuttonpress)
-        self.input_handler = inputhandler.InputHandler(self)
-        Window.bind(on_keyboard = self.input_handler.parse_input)
         self.output_handler = outputhandler.OutputHandler()
         Clock.schedule_interval(self.constant_callback, 0.05)
         
     def kbbuttonpress(self, *args):
-        Window.request_keyboard(self.resize_screen, self)
+        inputhandler.KeyboardListener(self)
     
     def constant_callback(self, dt=0):
         self.resize_screen()
