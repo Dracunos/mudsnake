@@ -15,15 +15,15 @@ class InputHandler(object):
 class KeyboardListener(Widget):
     def __init__(self, kivyroot, **kwargs):
         super(KeyboardListener, self).__init__(**kwargs)
-        self._keyboard = Window.request_keyboard(self.keyboard_closed, self)
+        self._keyboard = Window.request_keyboard(self.keyboard_closed, kivyroot.ids.inputbox)
         if self._keyboard.widget:
             # This means we have a vkeyboard object
             pass
         self.handler = InputHandler(kivyroot)
-        self._keyboard.bind(on_key_down=self.handler.parse_input)
+        #self._keyboard.bind(on_key_down=self.handler.parse_input)
         Logger.info("Input: Keyboard opened.")
 
     def keyboard_closed(self):
         Logger.info("Input: Keyboard closed.")
-        self._keyboard.unbind(on_key_down=self.handler.parse_input)
+        #self._keyboard.unbind(on_key_down=self.handler.parse_input)
         self._keyboard = None

@@ -27,9 +27,11 @@
                 text_size: (self.width, self.height)
                 font_name: "RobotoMono-Regular"
             
-        InputBox:
+        TextInput:
             id: inputbox
-            size_hint: (1, 0.06)
+            keyboard_suggestions: False
+            size_hint: (1, None)
+            height: 100
             
     KeyboardOffset:
         id: kboffset
