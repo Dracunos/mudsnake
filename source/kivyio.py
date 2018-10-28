@@ -21,14 +21,18 @@ class MainRoot(GridLayout):
         self.app = main_app
         self.ids.kbbutt.bind(on_touch_down = self.kbbuttonpress)
         self.input_handler = inputhandler.InputHandler(self)
-        Window.bind(on_key_down = self.input_handler.parse_input)
+        Window.bind(on_keyboard = self.input_handler.parse_input)
         self.output_handler = outputhandler.OutputHandler()
-        Clock.schedule_interval(self.resize_screen, 0.05)
+        Clock.schedule_interval(self.constant_callback, 0.05)
         
     def kbbuttonpress(self, *args):
         Window.request_keyboard(self.resize_screen, self)
+    
+    def constant_callback(self, dt=0):
+        self.resize_screen()
+        self.ids.outputbuffer.scroll_to_bottom()
         
-    def resize_screen(self, dt=0):
+    def resize_screen(self):
         kb_size = Window.keyboard_height
         self.ids.kboffset.height = kb_size
         
