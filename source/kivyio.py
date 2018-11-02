@@ -73,7 +73,13 @@ class KeyboardOffset(Label):
             
 class MudSnakeApp(App):
     def build(self):
-       return MainRoot(main_app=self)
+        return MainRoot(main_app=self)
+
+    def on_pause(self):
+        return True
+
+    def on_resume(self):
+        return True
 
 if __name__ == '__main__':
     MudSnakeApp().run()
